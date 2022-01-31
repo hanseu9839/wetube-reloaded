@@ -17,7 +17,10 @@
   "homepage": "https://github.com/hanseu9839/wetube-reloaded#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "connect-mongo": "^4.6.0",
+    "dotenv": "^14.3.2",
     "express": "^4.17.2",
+    "express-session": "^1.17.2",
     "mongoose": "^6.1.6",
     "morgan": "^1.10.0",
     "pug": "^3.0.2"

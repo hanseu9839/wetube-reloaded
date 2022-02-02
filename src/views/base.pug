@@ -8,15 +8,18 @@ html(lang="ko")
             h1=pageTitle
             nav 
                 ul 
-                    li 
-                        a(href="/videos/upload") Upload Video
+                 
                     li 
                         a(href="/") Home
                     li 
                         a(href="/search") Search
                     if loggedIn 
+                       li 
+                        a(href="/videos/upload") Upload Video
                         li 
-                            a(herf="/join") Log Out
+                            a(href="/users/edit") Edit Profile
+                        li 
+                            a(href="/users/logout") Log Out
                         li 
                             a(href="/my-profile") #{loggedInUser.name}의 Profile
                     else

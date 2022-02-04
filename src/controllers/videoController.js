@@ -8,7 +8,7 @@ import Video from "../models/Video";
 export const home = async(req,res) => {   
         const videos = await Video.find({}).sort({createdAt: "desc"});
         return res.render("home",{pageTitle: "Home",videos});     
-}
+};
 export const watch = async (req,res) =>{
     const {id}= req.params;
     const video = await Video.findById(id);
@@ -43,11 +43,14 @@ export const getUpload = (req,res) => {
     return res.render("upload",{pageTitle:"Uploads Video"});
 };
 export const postUpload = async(req,res) => {
+    const {path:fileUrl} = req.file;
     const {title,description,hashtags} = req.body;
+    console.log(file);
     try{
         await Video.create({
             title,
             description,
+            fileUrl,
             hashtags: Video.formatHashtags(hashtags),     
         });
         return res.redirect("/");

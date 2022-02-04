@@ -137,21 +137,27 @@ export const getEdit = (req,res) => {
 export const postEdit = async(req,res) =>{
     const { 
         session:  {
-            user: {_id},
-            
+            user: {_id, avatarUrl},            
             }, 
            body: { email, username, name, location}, 
+           file,
         } = req;
-    const logInUsername = req.session.user.username;
+    console.log();
+    const logInUsername = req.session.user.username;//hanseu9839
     const logInEmail = req.session.user.email;
-    const exists = User.exists({$or: [{email},{username}]});
-    if((exists&&username!=logInUsername)||(exists&&email!=logInEmail)){
+    const findUser = await User.findOne({username});//hans9839
+    const findEmail = await User.findOne({email});
+    
+    if((findUser!=null&&findUser.username!=logInUsername)
+        ||(findEmail!=null&&findEmail.email!=logInEmail)){
         return res.status(400).render("edit-profile",
         {pageTitle: "Edit Profile"
         ,errorMessage: "This is email/username Already taken.",
     });
     }
     const updateUser = await User.findByIdAndUpdate(_id,{
+
+            avatarUrl:file? file.path : avatarUrl,
             name,
             email,
             username,
@@ -195,4 +201,7 @@ export const postChangePassword = async(req,res) =>{
     
    return res.redirect("/users/logout");
 };
-export const see = (req,res) => res.send("see User");
+export const see = (req,res) => {
+    const {id}=req.params;
+    return res.render("profile",{pageTitle:"User Profile"});
+}

@@ -59,10 +59,10 @@ export const postLogin = async(req,res)=> {
 };
 
 export const startGithubLogin = (req,res) =>{
-    const baseUrl ="https://github.com/login/oauth/authorize";
+    const baseUrl = "https://github.com/login/oauth/authorize"
     const config = {
-        client_id : process.env.GH_CLIENT,
-        allow_signup:false,
+        client_id: process.env.GH_CLIENT,
+        allow_signup: false,
         scope: "read:user user:email",
     };
     const params = new URLSearchParams(config).toString();
@@ -70,102 +70,103 @@ export const startGithubLogin = (req,res) =>{
     return res.redirect(finalUrl);
 };
 export const finishGithubLogin = async(req,res) =>{
-    const baseUrl = "https://github.com/login/oauth/access_token";
+    const baseUrl = "https://github.com/login/oauth/access_token"
+
     const config = {
         client_id: process.env.GH_CLIENT,
         client_secret: process.env.GH_SECRET,
-        code: req.query.code,
+        code: req.query.code
     }
     const params = new URLSearchParams(config).toString();
-    const finalUrl = `${baseUrl}?${params}`;
-    const tokenRequest = await(await fetch(finalUrl,{
-        method:"POST",
-        headers: {
-            Accept: "application/json",
-        },
-    })
-    ).json();
-    if("access_token" in tokenRequest){
-        const {access_token } = tokenRequest;
-        const apiUrl = "https://api.github.com";
-        const userData = await(
-            await fetch(`${apiUrl}/user`,{
+    const finalUrl = `${baseUrl}?${params}`
+    const tokenRequest = await (
+        await fetch(finalUrl, {
+            method: "POST",
             headers: {
-                Authorization: `token ${access_token}`,
+                Accept: "application/json",
             },
         })
-        ).json();
-        console.log(userData);
-        const emailData = await(
-            await fetch(`${apiUrl}/user/emails`,{
-                headers:{
-                    Authorization: `token ${access_token}`,
-                },
-            })
-            ).json();
+    ).json();
+    if ("access_token" in tokenRequest) {
+        const {
+            access_token
+        } = tokenRequest;
+        const apiUrl = "https://api.github.com"
+        const userData = await (await fetch(`${apiUrl}/user`, {
+            headers: {
+                Authorization: `token ${access_token}` //json에는 token이 있어서 access_token을 fetch
+            }
+        })).json();
+        console.log(userData)
+        const emailData = await (await fetch(`${apiUrl}/user/emails`, {
+            headers: {
+                Authorization: `token ${access_token}` //json에는 token이 있어서 access_token을 fetch
+            },
+
+        })).json();
+        console.log(emailData);
         const emailObj = emailData.find(
             (email) => email.primary === true && email.verified === true);
-        if(!emailObj){
-            //set notification
+        if (!emailObj) {
             return res.redirect("/login");
         }
-        let user =  await User.findOne({email: emailObj.email});
-        if(!user){
-            const user = await User.create({
-                name:userData.name,
-                avatarUrl:userData.avatar_url,
-                username:userData.login, 
-                email:emailObj.email, 
-                password:"",
-                socialOnly:true,
-                location:userData.location,
+        let user = await User.findOne({
+            email: emailObj.email
+        });
+        if (!user) {
+            //해당 이메일로 user가 없으니까 계정을 생성해라
+            user = await User.create({
+                avatarUrl: userData.avatar_url,
+                name: userData.name ? userData.name : userData.login,
+                username: userData.login,
+                email: emailObj.email,
+                password: "",
+                socialOnly: true,
+                location: userData.location,
             });
-            req.session.loggedIn= true;
-            req.session.user = user;
-            return res.redirect("/");
         }
-        req.session.loggedIn= true;
+        req.session.loggedIn = true;
         req.session.user = user;
         return res.redirect("/");
-    }else {
+    } else {
         return res.redirect("/login");
-    }
-    
+    }  
 };
 export const getEdit = (req,res) => {
      return res.render("edit-profile",{pageTitle:"Edit Profile",user:req.session.user});
 };
 export const postEdit = async(req,res) =>{
-    const { 
-        session:  {
-            user: {_id, avatarUrl},            
-            }, 
-           body: { email, username, name, location}, 
-           file,
-        } = req;
-  
-    const logInUsername = req.session.user.username;//hanseu9839
-    const logInEmail = req.session.user.email;
-    const findUser = await User.findOne({username});//hans9839
-    const findEmail = await User.findOne({email});
-    
-    if((findUser!=null&&findUser.username!=logInUsername)
-        ||(findEmail!=null&&findEmail.email!=logInEmail)){
-        return res.status(400).render("edit-profile",
-        {pageTitle: "Edit Profile"
-        ,errorMessage: "This is email/username Already taken.",
-    });
-    }
-    const updateUser = await User.findByIdAndUpdate(_id,{
-
-            avatarUrl:file? file.path : avatarUrl,
-            name,
-            email,
-            username,
-            location,
+    const {
+        session: {
+            user: { _id, avatarUrl, email: sessionEmail, username: sessionUsername },
         },
-        {new : true});
-        req.session.user = updateUser;
+        body: { name, email, username, location },
+        file
+    } = req;
+
+    console.log(file);
+    let searchParam = [];
+    if (sessionEmail !== email) {
+        searchParam.push({ email });
+    }
+    if (sessionUsername !== username) {
+        searchParam.push({ username });
+    }
+    if (searchParam.length > 0) {
+        const foundUser = await User.findOne({ $or: searchParam });
+        if (foundUser && foundUser._id.toString() !== _id) {
+            return res.status(400).render("edit-profile", {
+                pageTitle: "Edit Profile",
+                errorMessage: "This username/email is already taken.",
+            });
+        }
+    }
+    const updatedUser = await User.findByIdAndUpdate(_id,{
+        name:name, email:email, username:username, location:location,
+        avatarUrl: file ? file.path : avatarUrl,
+    },
+    {new : true});
+    req.session.user =  updatedUser;
     return res.redirect("/users/edit");
 };
 export const logout = (req, res) => {
@@ -197,8 +198,7 @@ export const postChangePassword = async(req,res) =>{
         return res.status(400).render("users/change-password", {pageTitle: "Change Password", errorMessage: "The password does not match the confirmation"});
     }  
    user.password=newPassword;
-   await user.save();
-    
+   await user.save(); 
    return res.redirect("/users/logout");
 };
 export const see = async(req,res) => {
@@ -211,7 +211,6 @@ export const see = async(req,res) => {
     
     return res.render("users/profile",{
         pageTitle:user.name, 
-        user,
-       
+        user,      
     });
 }

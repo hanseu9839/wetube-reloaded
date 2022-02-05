@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import User from "../models/User";
+import Video from "../models/Video";
 import fetch from "node-fetch";
 export const getJoin = (req,res) => res.render("join",{
     pageTitle: "Join"
@@ -142,7 +143,7 @@ export const postEdit = async(req,res) =>{
            body: { email, username, name, location}, 
            file,
         } = req;
-    console.log();
+  
     const logInUsername = req.session.user.username;//hanseu9839
     const logInEmail = req.session.user.email;
     const findUser = await User.findOne({username});//hans9839
@@ -167,7 +168,7 @@ export const postEdit = async(req,res) =>{
         req.session.user = updateUser;
     return res.redirect("/users/edit");
 };
-export const logout = (req,res) => {
+export const logout = (req, res) => {
     req.session.destroy();
     return res.redirect("/");
 };
@@ -180,8 +181,7 @@ export const getChangePassword = (req,res) => {
 export const postChangePassword = async(req,res) =>{
     const { 
         session:  {
-            user: {_id},
-            
+            user: {_id},            
             }, 
            body: { oldPassword, newPassword, newPasswordConfirmation,}, 
         } = req;
@@ -201,7 +201,17 @@ export const postChangePassword = async(req,res) =>{
     
    return res.redirect("/users/logout");
 };
-export const see = (req,res) => {
+export const see = async(req,res) => {
     const {id}=req.params;
-    return res.render("profile",{pageTitle:"User Profile"});
+    const  user= await User.findById(id).populate("videos");
+   
+    if(!user){
+        return res.status(404).render("404", {pageTitle:"User not found."});
+    }
+    
+    return res.render("users/profile",{
+        pageTitle:user.name, 
+        user,
+       
+    });
 }

@@ -144,7 +144,7 @@ export const postEdit = async(req,res) =>{
         file
     } = req;
 
-    console.log(file);
+   
     let searchParam = [];
     if (sessionEmail !== email) {
         searchParam.push({ email });

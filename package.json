@@ -7,7 +7,8 @@
     "url": "git+https://github.com/hanseu9839/wetube-reloaded.git"
   },
   "scripts": {
-    "dev": "nodemon --exec babel-node src/init.js"
+    "dev": "nodemon --exec babel-node src/init.js",
+    "assets": "webpack --config webpack.config.js"
   },
   "author": "Han",
   "license": "MIT",
@@ -24,13 +25,17 @@
     "mongoose": "^6.1.6",
     "morgan": "^1.10.0",
     "multer": "^1.4.4",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "pug": "^3.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",
     "@babel/node": "^7.16.7",
     "@babel/preset-env": "^7.16.7",
-    "nodemon": "^2.0.15"
+    "acorn": "^8.7.0",
+    "babel-loader": "^8.2.3",
+    "nodemon": "^2.0.15",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2"
   }
 }

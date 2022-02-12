@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/hanseu9839/wetube-reloaded#readme",
   "dependencies": {
+    "@ffmpeg/core": "^0.10.0",
+    "@ffmpeg/ffmpeg": "^0.10.1",
     "bcrypt": "^5.0.1",
     "connect-mongo": "^4.6.0",
     "dotenv": "^14.3.2",
@@ -26,7 +28,8 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.4",
     "node-fetch": "^2.6.7",
-    "pug": "^3.0.2"
+    "pug": "^3.0.2",
+    "regenerator-runtime": "^0.13.9"
   },
   "devDependencies": {
     "@babel/core": "^7.16.7",

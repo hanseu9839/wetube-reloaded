@@ -17,6 +17,8 @@ let controlsMovementTimeout = null;
 let volumeValue = 0.5;
 video.volume =volumeValue;
 
+
+
 const handlePlayClick = (e)=>{
     // if hte video is playing , pasuse it
     if(video.paused){
@@ -133,12 +135,20 @@ const handleKeyEvent = (event) =>{
         break;
     }
 };
+
+const handleEnded = () => {
+    const {id} = videoContainer.dataset;
+    fetch(`/api/videos/${id}/view`,{
+    method:"POST"
+    });
+};
 playBtn.addEventListener("click",handlePlayClick);
 muteBtn.addEventListener("click",handleMute);
 volumeRange.addEventListener("input", handleVolumeChange);
 video.addEventListener("loadedmetadata", handleLoadedMetadata);
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("click",handleVideoClickPlay);
+video.addEventListener("ended",handleEnded);
 timeline.addEventListener("input",handleTimelineChange);
 fullSceentBtn.addEventListener("click",handleFullscreen);
 videoContainer.addEventListener("mousemove", handleMouseMove);

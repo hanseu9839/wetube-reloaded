@@ -6,9 +6,10 @@ form{
     border-radius: 10px;
     border: 1px solid rgba($color: #fff,$alpha:0.2);
 }
-input:not(input[type="range"]) {    
-    all:unset;
-    padding:5px 20px;
+input:not(input[type="range"]),
+input[type="submit"] {    
+    all: unset;
+    padding: 15px 20px;
     border-radius: 5px;
     border: 1px solid rgba(255,255,255,0.2);
     background-color: black;
@@ -24,9 +25,17 @@ input:not(input[type="range"]) {
 input[type="submit"],
 .social__btn{
     padding: 12px 20px;
-    background-color: white;
-    color: rgba($color:$red,$alpha: 1);
-    text-align: center;
+    background-color: white !important;
+    color: rgba($color: $red, $alpha: 1) !important;
+    text-align: center !important;
     cursor: pointer;
     display:block;
+    border: none;
+  &:focus {
+    outline: none;
+  }
+  &:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 }

@@ -1,6 +1,6 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
-
+const del = document.getElementById("deleteCommentBtn");
 
 const addComment = (text)=>{
   const videoComments = document.querySelector(".video__comments ul");

@@ -122,7 +122,9 @@ export const registerView = async(req,res) =>{
     await video.save();
     return res.sendStatus(200);
 };
-
+export const deleteComment = async(req,res)=>{
+        return;
+};
 export const createComment = async(req,res) =>{
     const {session: {user},
         body:{text},

@@ -1,6 +1,6 @@
 const videoContainer = document.getElementById("videoContainer");
 const form = document.getElementById("commentForm");
-const del = document.getElementById("deleteCommentBtn");
+const delBtns = document.querySelectorAll(".deleteCommentBtn");
 
 const addComment = (text)=>{
   const videoComments = document.querySelector(".video__comments ul");
@@ -9,10 +9,19 @@ const addComment = (text)=>{
   const icon = document.createElement("i");
   icon.className = "fas fa-comment";
   const span = document.createElement("span");
+  const delBtn = document.createElement("span");
   span.innerText = ` ${text}`;
+  delBtn.innerText = '❌';
   newComment.appendChild(icon);
   newComment.appendChild(span);
+  newComment.appendChild(delBtn);
   videoComments.prepend(newComment);
+}
+const deleteCom = (event)=>{
+  let li=event.target.parentElement;
+  console.log(li);
+  li.remove();
+  li="";
 }
 const handleSubmit = async(event) => {
   event.preventDefault();
@@ -36,4 +45,8 @@ const handleSubmit = async(event) => {
 };
 if(form){
     form.addEventListener("submit", handleSubmit);
+}
+
+for(let i=0;i<delBtns.length;i++){
+  delBtns[i].addEventListener("click",deleteCom);
 }

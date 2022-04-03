@@ -7,6 +7,8 @@
     "url": "git+https://github.com/hanseu9839/wetube-reloaded.git"
   },
   "scripts": {
+    "start": "node build/init.js",
+    "build:server":"babel src -d build",
     "dev:server": "nodemon",
     "dev:assets": "webpack"
   },
@@ -34,7 +36,8 @@
     "regenerator-runtime": "^0.13.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.7",
+    "@babel/cli": "^7.17.6",
+    "@babel/core": "^7.17.8",
     "@babel/node": "^7.16.7",
     "@babel/preset-env": "^7.16.7",
     "acorn": "^8.7.0",

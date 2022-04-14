@@ -49,7 +49,7 @@ limits:{
     }, 
     storage:s3ImageUploader,
 });
-export const s3VideoUploader = multer({
+export const videoUploader = multer({
     dest:"uploads/videos/",
 limits:{
     fileSize:10000000,

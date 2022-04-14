@@ -32,11 +32,11 @@ app.use(
 );
 app.use(flash());
 app.use(localsMiddleware);
-app.use("/uploads",express.static("uploads"));
-app.use("/static",express.static("assets"));
-app.use("/videos",videoRouter);
-app.use("/users",userRouter);
-app.use("/",rootRouter);
-app.use("/api",apiRouter);
+app.use("/uploads", express.static("uploads"));
+app.use("/static", express.static("assets"));
+app.use("/", rootRouter);
+app.use("/videos", videoRouter);
+app.use("/users", userRouter);
+app.use("/api", apiRouter);
 
 export default app;

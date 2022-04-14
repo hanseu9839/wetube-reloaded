@@ -8,10 +8,17 @@ const s3 = new aws.S3({
         secretAccessKey:process.env.AWS_SECRET
     }
 });
-const muterUploader =  multerS3({
+const s3ImageUploader =  multerS3({
     s3: s3,
-    bucket: "doongtube",
+    bucket: "doongtube/images",
     acl: 'public-read',
+});
+
+const s3VideoUploader =  multerS3({
+    s3: s3,
+    bucket: "doongtube/videos",
+    acl: 'public-read',
+    contentType: multerS3.AUTO_CONTENT_TYPE,
 });
 export const localsMiddleware =  (req,res,next) => {
     res.locals.loggedIn = Boolean(req.session.loggedIn);
@@ -40,12 +47,12 @@ export const avatarUpload = multer({
 limits:{
     fileSize:3000000,
     }, 
-    storage:muterUploader,
+    storage:s3ImageUploader,
 });
-export const videoUpload = multer({
+export const s3VideoUploader = multer({
     dest:"uploads/videos/",
 limits:{
     fileSize:10000000,
     }, 
-    storage:muterUploader,  
+    storage:s3VideoUploader,  
 });

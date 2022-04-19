@@ -137,7 +137,7 @@ const handleKeyEvent = (event) =>{
 };
 
 const handleEnded = () => {
-    const {id} = videoContainer.dataset.videoid;
+    const {id} = videoContainer.dataset;
     fetch(`/api/videos/${id}/view`,{
     method:"POST"
     });

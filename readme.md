@@ -46,8 +46,12 @@ Tools : VS Code
 /api/videos/:id/view -> 동영상 본 횟수 <br>
 /api/videos/:id/comment -> 댓글 생성 <br>
 /api/videos/comment/:id/delete -> 댓글 삭제<br>
+<hr>
 
 # UI구성 
 <img src="./img/UI1.png" width="100%" height="500">
 <img src="./img/UI2.png" width="100%" height="300">
 <img src ="./img/UI3.png" width="500" height="300">
+
+# DoongTube 데이터 베이스 구조
+<img src="./img/DB.png" width="100%" hieght="500">

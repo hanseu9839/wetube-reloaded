@@ -16,7 +16,7 @@ DevOps : AWS- S3, MongoDB, herokuApp <br>
 Tools : VS Code
 
 # 자세한 프로젝트 설명  
-## Router 
+## 각각의 라우터 URL구성 
 ### URL이란?  
 내가 페이지에 접속하여 웹 브라우저에게 얻어오거나 보내줄 때 이러한 정보 자원들이 있는 곳을 나타내는 일련의 규칙이다.
 ### 라우터란? 
@@ -46,3 +46,8 @@ Tools : VS Code
 /api/videos/:id/view -> 동영상 본 횟수 <br>
 /api/videos/:id/comment -> 댓글 생성 <br>
 /api/videos/comment/:id/delete -> 댓글 삭제<br>
+
+# UI구성 
+<img src="./img/UI1.png" width="100%" height="500">
+<img src="./img/UI2.png" width="100%" height="300">
+<img src ="./img/UI3.png" width="500" height="300">

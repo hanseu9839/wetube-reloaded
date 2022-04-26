@@ -59,13 +59,13 @@ export const postLogin = async(req,res)=> {
 };
 
 export const startGithubLogin = (req,res) =>{
-    const baseUrl = "https://github.com/login/oauth/authorize"
+    const baseUrl = "https://github.com/login/oauth/authorize" //github 로그인 권한 URL로 접근
     const config = {
         client_id: process.env.GH_CLIENT,
         allow_signup: false,
         scope: "read:user user:email",
-    };
-    const params = new URLSearchParams(config).toString();
+    };//깃허브 환경 변수 
+    const params = new URLSearchParams(config).toString();//URL에 있는 정보를 가져옴 
     const finalUrl = `${baseUrl}?${params}`;
     return res.redirect(finalUrl);
 };

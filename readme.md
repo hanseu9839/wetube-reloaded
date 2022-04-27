@@ -3,6 +3,8 @@
 2022/01/20 -> 2022/03/26
 <hr>
 
+프로젝트로 공부하면서 정리 한 내용, [notion](https://chipped-sardine-ea7.notion.site/YoutubeCloneCodeing-21c8f9951458425b993a35256859c82b) 
+
 ### 프로젝트 설명 
 - 많은 사람들이 사용하는 유튜브를 나만의 웹페이지로 만들어 나의 영상을 올리고 싶어 클론 코딩을 하게 되었습니다.
 - nomadCoders 를 보고 MongoDB,Express, JS(ES6)등을 강의를 보고 공부하며 만든 클론 프로젝트 입니다.
